@@ -1,7 +1,9 @@
 "use client";
 
 import { Menu, X } from "lucide-react";
+import Image from "next/image";
 
+import portrait from "@/assets/kristopher-valladares.jpg";
 import { GithubIcon, LinkedinIcon } from "@/components/icons";
 import { useState } from "react";
 
@@ -16,9 +18,13 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-4 px-5 py-3.5">
         <a href="#top" className="group flex items-center gap-2.5">
-          <span className="flex size-7 items-center justify-center rounded-md bg-foreground text-[11px] font-semibold text-background">
-            KV
-          </span>
+          <Image
+            src={portrait}
+            alt=""
+            placeholder="blur"
+            sizes="32px"
+            className="size-7 rounded-full border border-border/70 object-cover object-[52%_30%]"
+          />
           <span className="text-sm font-medium tracking-tight sm:inline">
             {profile.name}
           </span>

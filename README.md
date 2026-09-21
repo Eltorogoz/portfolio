@@ -56,10 +56,37 @@ GitHub is unreachable or rate-limiting, and an empty state if every repository i
 Drop the new PDF at `public/files/Kristopher-Valladares-Resume.pdf`, or change `profile.resumePath`
 to point somewhere else.
 
-## Deploying
+## Deploying to Vercel
 
-The site is a standard Next.js app with no database and no required environment variables, so
-`vercel` or any Node host will run it as-is:
+There is no database and no required environment variable, so the import needs no configuration.
+
+1. Create an empty repository on GitHub — `Eltorogoz/portfolio` — with no README, licence or
+   `.gitignore`.
+2. Push this directory to it. If this folder is the repository root, `git push` is all that is
+   needed. If it sits inside a larger repository, either split it out or set **Root Directory** to
+   `portfolio` in step 4.
+3. At [vercel.com/new](https://vercel.com/new), choose **Import Git Repository** and pick the repo.
+4. Leave every build setting alone. Vercel detects Next.js, runs `npm install` and `next build`, and
+   picks the right Node version from the lockfile. Set **Root Directory** here if the app is not at
+   the repository root.
+5. Click **Deploy**. The first build takes a couple of minutes and ends on a
+   `your-project.vercel.app` URL. Every later push to `main` redeploys automatically.
+
+### Optional: raise the GitHub rate limit
+
+The repository section works anonymously. GitHub allows 60 unauthenticated requests an hour per IP,
+and the response is cached for an hour, so this is rarely a problem. If the section ever shows its
+error state, add a read-only token in **Project Settings → Environment Variables** as `GITHUB_TOKEN`
+and redeploy. A classic token with no scopes selected is enough for public repository data.
+
+### Rendering model
+
+`next.config.ts` enables `cacheComponents`, so the page is partially prerendered: everything except
+the GitHub section is static HTML served from the CDN, and that one section streams in per request.
+It is done this way because prerendering the GitHub call at build time would bake a rate-limit error
+into the page until the next revalidation. `next build` reports the route as `◐ Partial Prerender`.
+
+### Any other Node host
 
 ```bash
 npm run build

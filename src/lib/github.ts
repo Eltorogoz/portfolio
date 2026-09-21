@@ -1,3 +1,5 @@
+import { connection } from "next/server";
+
 import {
   featuredProjects,
   hiddenRepos,
@@ -30,6 +32,14 @@ const HIDDEN = new Set([
  * the caller can render an error state.
  */
 export async function fetchRepos(): Promise<Repo[]> {
+  // Render this section per request rather than at build time. GitHub
+  // rate-limits anonymous calls per IP, and a shared CI build IP can hit that
+  // limit; prerendering would then bake the error state into the page until
+  // the next revalidation. The fetch below is still cached for an hour, so
+  // per-request rendering costs one upstream call per hour, not one per
+  // visitor.
+  await connection();
+
   const headers: HeadersInit = {
     Accept: "application/vnd.github+json",
     "User-Agent": "kristopher-valladares-portfolio",

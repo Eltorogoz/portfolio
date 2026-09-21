@@ -242,6 +242,7 @@ export const education = {
  * repo already listed, and coursework from the first weeks of learning to code.
  */
 export const hiddenRepos = [
+  "portfolio", // this site; listing itself would be circular
   "tuggon",
   "livinglab",
   "Blueline-Rental",

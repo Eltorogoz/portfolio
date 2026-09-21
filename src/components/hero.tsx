@@ -1,6 +1,7 @@
 import { ArrowDown, FileText, Mail, MapPin } from "lucide-react";
 import Image from "next/image";
 
+import avatar from "@/assets/kristopher-valladares-avatar.jpg";
 import portrait from "@/assets/kristopher-valladares.jpg";
 import { Button } from "@/components/ui/button";
 import { profile } from "@/content/profile";
@@ -22,12 +23,12 @@ export function Hero() {
           {/* Small screens get the portrait as an avatar; the full frame below
               only appears once there is a second column to put it in. */}
           <Image
-            src={portrait}
+            src={avatar}
             alt={`${profile.name}, photographed in Kyoto`}
             placeholder="blur"
             priority
             sizes="96px"
-            className="mb-7 size-24 rounded-full border border-border/70 object-cover object-[52%_30%] lg:hidden"
+            className="mb-7 size-24 rounded-full border border-border/70 object-cover lg:hidden"
           />
 
           <p className="inline-flex items-center gap-1.5 rounded-full border border-border/70 bg-muted/40 px-3 py-1 font-mono text-xs text-muted-foreground">
